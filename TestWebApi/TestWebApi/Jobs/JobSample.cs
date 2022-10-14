@@ -16,7 +16,7 @@ namespace TestWebApi.Jobs
         {
             return Task.Run(() =>
             {
-                Console.WriteLine("JOB2 RUN", DateTime.Now, context.JobDetail);
+                Console.WriteLine($"JOB2 RUN {DateTime.Now}");
             });
         }
     }

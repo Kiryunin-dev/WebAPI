@@ -7,6 +7,7 @@ using Swashbuckle.AspNetCore.SwaggerGen;
 using Swashbuckle.Swagger;
 using System.Reflection;
 using TestWebApi.Configure;
+using TestWebApi.Quartz;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -24,6 +25,8 @@ builder.Services.AddSwaggerGen(options =>
 });
 
 builder.Services.AddTransient<IConfigureOptions<SwaggerGenOptions>, ConfigureSwaggerOptions>();
+
+builder.Services.ConfigureQurtz();
 
 builder.Services.AddApiVersioning(options =>
 {

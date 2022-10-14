@@ -3,13 +3,13 @@ using Quartz.Spi;
 
 namespace TestWebApi.Quartz
 {
-    public class QurtzHostedService: IHostedService
+    public class QuartzHostedService: IHostedService
     {
         private readonly IJobFactory jobFactory;
         private readonly ISchedulerFactory schedulerFactory;
         private readonly IEnumerable<TaskInfo> tasksInfo;
 
-        public QurtzHostedService(IJobFactory jobFactory, ISchedulerFactory schedulerFactory, IEnumerable<TaskInfo> tasksInfo)
+        public QuartzHostedService(IJobFactory jobFactory, ISchedulerFactory schedulerFactory, IEnumerable<TaskInfo> tasksInfo)
         {
             this.jobFactory = jobFactory;
             this.schedulerFactory = schedulerFactory;
@@ -22,7 +22,7 @@ namespace TestWebApi.Quartz
         {
             scheduler = await schedulerFactory.GetScheduler(cancellationToken);
 
-            //scheduler.JobFactory = jobFactory;
+            scheduler.JobFactory = jobFactory;
 
             foreach (var info in tasksInfo)
             {
