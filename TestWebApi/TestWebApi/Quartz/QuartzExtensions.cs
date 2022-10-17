@@ -5,10 +5,15 @@ using TestWebApi.Jobs;
 
 namespace TestWebApi.Quartz
 {
+    using Microsoft.Extensions.DependencyInjection;
+    using TestWebApi.Common.Configurations;
+
     public static class QuartzExtensions
     {
-        public static void ConfigureQurtz(this IServiceCollection services)
+        public static void ConfigureQuartz(this IServiceCollection services, IConfiguration config)
         {
+            var setiings = config.GetSection("SchedulerConfig").Get<SchedulerConfig>();
+
             services.AddSingleton<ISchedulerFactory, StdSchedulerFactory>();
             services.AddSingleton<IJobFactory, JobFactory>();
 
@@ -17,12 +22,12 @@ namespace TestWebApi.Quartz
 
             services.AddSingleton(_ => 
             {
-                return new TaskInfo(typeof(JobSample), "0 0/1 * * * ?");
+                return new TaskInfo(typeof(JobSample), setiings.JobExtension);
             });
 
             services.AddSingleton(_ =>
             {
-                return new TaskInfo(typeof(JobSampleTwo), "0 0/1 * * * ?");
+                return new TaskInfo(typeof(JobSampleTwo), setiings.JobTwoExtension);
             });
 
             services.AddHostedService<QuartzHostedService>();

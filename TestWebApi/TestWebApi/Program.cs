@@ -8,6 +8,7 @@ using Swashbuckle.Swagger;
 using System.Reflection;
 using TestWebApi.Configure;
 using TestWebApi.Quartz;
+using TestWebApi.Common.Configurations;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -26,7 +27,7 @@ builder.Services.AddSwaggerGen(options =>
 
 builder.Services.AddTransient<IConfigureOptions<SwaggerGenOptions>, ConfigureSwaggerOptions>();
 
-builder.Services.ConfigureQurtz();
+builder.Services.ConfigureQuartz(builder.Configuration);
 
 builder.Services.AddApiVersioning(options =>
 {
