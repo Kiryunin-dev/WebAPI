@@ -9,6 +9,7 @@ using System.Reflection;
 using TestWebApi.Configure;
 using TestWebApi.Quartz;
 using TestWebApi.Common.Configurations;
+using Microsoft.AspNetCore.Mvc.Versioning;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -32,8 +33,9 @@ builder.Services.ConfigureQuartz(builder.Configuration);
 builder.Services.AddApiVersioning(options =>
 {
     options.ReportApiVersions = true;
-    options.DefaultApiVersion = ApiVersion.Parse("1.0");
-    options.AssumeDefaultVersionWhenUnspecified = true;
+    options.DefaultApiVersion = new ApiVersion(4, 0);
+    //options.ApiVersionReader = new UrlSegmentApiVersionReader();
+    //options.AssumeDefaultVersionWhenUnspecified = false;
 });
 
 builder.Services.AddVersionedApiExplorer(options =>
@@ -41,6 +43,7 @@ builder.Services.AddVersionedApiExplorer(options =>
     // Add the versioned api explorer, which also adds IApiVersionDescriptionProvider service
     // Note: the specified format code will format the version as "'v'major[.minor][-status]"
     options.GroupNameFormat = "'v'VVV";
+    options.SubstituteApiVersionInUrl = true;
 });
 
 var app = builder.Build();

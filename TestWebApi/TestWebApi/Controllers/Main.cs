@@ -7,7 +7,8 @@ namespace TestWebApi.Controllers
     /// </summary>
     [ApiController]
     [ApiVersion("1.0")]
-    [Route("api/v1/[controller]")]
+    [ApiVersion("4.5")]
+    [Route("api/v{version:apiVersion}/[controller]")]
     [Produces("application/json")]
     public class Main : ControllerBase
     {
@@ -17,12 +18,41 @@ namespace TestWebApi.Controllers
         /// <response code="200">Успешное возвращение значения</response>
         /// <response code="500">Внутренняя ошибка сервиса</response>
         [HttpGet("GetSquare")]
+        [MapToApiVersion("1.0")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public long Square(long value1, long value2)
+        public string Square()
         {
-            return value1 * value2;
+            return "Square1";
         }
+
+        /// <summary>
+        /// Получение квадрата числа
+        /// </summary>
+        /// <response code="200">Успешное возвращение значения</response>
+        /// <response code="500">Внутренняя ошибка сервиса</response>
+        [HttpGet("GetSquare")]
+        [MapToApiVersion("4.5")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public string Square4()
+        {
+            return "Square4.5";
+        }
+
+        ///// <summary>
+        ///// Получение квадрата числа
+        ///// </summary>
+        ///// <response code="200">Успешное возвращение значения</response>
+        ///// <response code="500">Внутренняя ошибка сервиса</response>
+        //[HttpGet("GetSquare")]
+        //[MapToApiVersion("2.0")]
+        //[ProducesResponseType(StatusCodes.Status200OK)]
+        //[ProducesResponseType(StatusCodes.Status400BadRequest)]
+        //public string Square2()
+        //{
+        //    return "Square2";
+        //}
 
         /// <summary>
         /// Удаление элемента

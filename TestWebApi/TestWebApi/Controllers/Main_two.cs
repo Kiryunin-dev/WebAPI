@@ -5,9 +5,9 @@ namespace TestWebApi.Controllers
     /// <summary>
     /// Основной контроллер
     /// </summary>
-    [ApiController]
-    [ApiVersion("2.0")]
-    [Route("api/v2/[controller]")]
+    //[ApiController]
+    //[ApiVersion("5.0")]
+    [Route("api/v{version:apiVersion}/[controller]")]
     [Produces("application/json")]
     public class Main_two : ControllerBase
     {
@@ -16,12 +16,27 @@ namespace TestWebApi.Controllers
         /// </summary>
         /// <response code="200">Успешное возвращение значения</response>
         /// <response code="500">Внутренняя ошибка сервиса</response>
-        [HttpGet("Square_two")]
+        [HttpGet("GetQuadro")]
+        [MapToApiVersion("5.0")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public long Square_two(long value1, long value2)
+        public string Quadro()
         {
-            return value1 * value2;
+            return "Quadro";
+        }
+
+        /// <summary>
+        /// Получение квадрата числа
+        /// </summary>
+        /// <response code="200">Успешное возвращение значения</response>
+        /// <response code="500">Внутренняя ошибка сервиса</response>
+        [HttpGet("GetSquare3")]
+        [MapToApiVersion("3.0")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public string Square3()
+        {
+            return "Square3";
         }
 
         /// <summary>
@@ -30,10 +45,10 @@ namespace TestWebApi.Controllers
         /// <response code="200">Успешное удаление элемента</response>
         /// <response code="400">Ошибка при удалении элемента</response>
         /// <response code="500">Собственная ошибка веб службы</response>
-        [HttpDelete("Error_two")]
+        [HttpDelete("DeleteItem")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public long Error_two()
+        public long Error()
         {
             throw new TimeoutException();
         }
